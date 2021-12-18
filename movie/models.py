@@ -23,6 +23,7 @@ class MovieGenre(models.Model):
     movie = models.ForeignKey(
         Movie,
         on_delete=models.CASCADE,
+        related_name="genres",
         default=None,
     )
     genre = models.CharField(
