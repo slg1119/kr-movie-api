@@ -5,7 +5,7 @@ import requests
 from django.core.management.base import BaseCommand
 from django.db import OperationalError, transaction
 
-from movie.models import Movie, MovieGenre
+from movie.models import Movie, MovieGenre, Genre
 
 
 class Command(BaseCommand):
@@ -24,7 +24,9 @@ class Command(BaseCommand):
             with transaction.atomic():
                 for _ in range(5):
                     data = self._get_movie_data()
+
                     movies = data["data"]["movies"]
+
                     for movie in movies:
                         movie_data = Movie.objects.create(
                             title=movie.get("title"),
@@ -32,9 +34,14 @@ class Command(BaseCommand):
                             rating=movie.get("rating"),
                             summary=movie.get("summary"),
                         )
+
                         genres = movie.get("genres")
                         if genres:
                             for genre in genres:
+                                if Genre.objects.filter(name=genre).exists():
+                                    genre = Genre.objects.get(name=genre)
+                                else:
+                                    genre = Genre.objects.create(name=genre)
                                 MovieGenre.objects.create(
                                     movie=movie_data,
                                     genre=genre,
