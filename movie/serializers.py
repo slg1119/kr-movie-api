@@ -22,3 +22,8 @@ class MovieModelSerializer(serializers.ModelSerializer):
         for genre in genres:
             MovieGenre.objects.create(movie=movie, **genre)
         return movie
+
+
+class MovieFilterSerializer(serializers.Serializer):
+    year = serializers.IntegerField(required=False)
+    genre = serializers.CharField(required=False)
