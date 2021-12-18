@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .viewsets import *
+from .views import *
 
 urlpatterns = [
     path(
@@ -22,5 +23,10 @@ urlpatterns = [
             },
         ),
         name="review_create",
+    ),
+    path(
+        route="vote/<int:pk>/",
+        view=VoteGenericAPIVIew.as_view(),
+        name="review_vote",
     ),
 ]
