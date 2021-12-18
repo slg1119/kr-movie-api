@@ -15,6 +15,9 @@ class MovieReview(models.Model):
     rating = models.FloatField(
         default=0,
     )
+    vote = models.PositiveIntegerField(
+        default=0,
+    )
     updated_at = models.DateTimeField(
         auto_now=True,
     )
