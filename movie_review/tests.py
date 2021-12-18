@@ -94,3 +94,21 @@ class MovieTests(TestCase):
         )
 
         self.assertEqual(response.status_code, 204)
+
+    def test_given_review_movie_data_when_vote_then_return_200(self):
+        """
+        정상적으로 투표가 되는지 확인하는 테스트
+        """
+        response = self.client.get(
+            path=reverse("review_vote", kwargs={"pk": 1}),
+        )
+        self.assertEqual(response.status_code, 200)
+
+    def test_given_review_movie_data_when_unvote_then_return_200(self):
+        """
+        정상적으로 투표가 취소 되는지 확인하는 테스트
+        """
+        response = self.client.delete(
+            path=reverse("review_vote", kwargs={"pk": 1}),
+        )
+        self.assertEqual(response.status_code, 200)
